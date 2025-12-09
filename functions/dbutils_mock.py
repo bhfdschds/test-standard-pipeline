@@ -379,11 +379,13 @@ def get_dbutils(
         path = dbutils.notebook.entry_point.getDbutils().notebook().getContext().notebookPath().get()
         user = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
     """
-    # Try to get real dbutils (works in Databricks)
+    # Try to get real dbutils (works in Databricks Connect)
     try:
         from pyspark.dbutils import DBUtils
         return DBUtils(spark)
-    except ImportError:
+    except (ImportError, RuntimeError, Exception):
+        # ImportError: pyspark.dbutils not available
+        # RuntimeError: Not connected to Databricks (local Spark session)
         pass
 
     # Try IPython method (works in Databricks notebooks)
