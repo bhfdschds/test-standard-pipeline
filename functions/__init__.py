@@ -6,3 +6,4 @@ from .data_wrangling import melt, clean_column_names, map_column_values
 from .json_utils import read_json_file, write_json_file
 from .table_management import load_table, save_table
 from .table_monitoring import data_quality_report
+from .dbutils_mock import get_dbutils
